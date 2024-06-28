@@ -182,6 +182,9 @@ namespace SoulsFormats
             int uncompressedSize = br.ReadInt32();
             int compressedSize = br.ReadInt32();
 
+            if (compressedSize < 0)
+                throw new EndOfStreamException("DCX file size must be non-negative: " + compressedSize);
+
             byte[] decompressed = SFUtil.ReadZlib(br, compressedSize);
 
             br.AssertASCII("DCA\0");
